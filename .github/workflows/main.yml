@@ -1,4 +1,4 @@
-name: Test React App
+name: Deploy React App
 
 on: 
   push: 
@@ -9,12 +9,15 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  deployment:
+    strategy:
+      matrix:
+        command: [lint, build]
     runs-on: ubuntu-latest
     steps:
-      - name: Get rep code
+      - name: get rep code
         uses: actions/checkout@v3
-      - name: Install dependencies
+      - name: install dependencies
         run: npm install
-      - name: Test
-        run: npm run test
+      - name: ${{matrix.command}}
+        run: npm run ${{matrix.command}}

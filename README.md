@@ -5,5 +5,4 @@
 - Run `npm install` to install dependencies
 - Run `npm start` to run
 ___
-### If you don't want to install it, you can try it here
-#### `u148879.test-handyhost.ru`
+### If you don't want to install it, you can try it [here](http://u148879.test-handyhost.ru/)

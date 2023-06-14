@@ -9,15 +9,24 @@ on:
   workflow_dispatch:
 
 jobs:
-  deployment:
+  npm-commands:
     strategy:
       matrix:
         command: [lint, build]
     runs-on: ubuntu-latest
     steps:
-      - name: get rep code
+      - name: Get rep code
         uses: actions/checkout@v3
-      - name: install dependencies
+      - name: Install dependencies
         run: npm install
       - name: ${{matrix.command}}
         run: npm run ${{matrix.command}}
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get rep code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Deploy
+        run: echo "12345"

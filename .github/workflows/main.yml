@@ -9,18 +9,28 @@ on:
   workflow_dispatch:
 
 jobs:
-  npm-commands:
-    strategy:
-      matrix:
-        command: [lint, build]
+
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Get rep code
         uses: actions/checkout@v3
       - name: Install dependencies
         run: npm install
-      - name: ${{matrix.command}}
-        run: npm run ${{matrix.command}}
+      - name: Lint App
+        run: npm run lint
+
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get rep code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Build App
+        run: npm run build
+
   deployment:
     runs-on: ubuntu-latest
     steps:

@@ -10,16 +10,48 @@ on:
 
 jobs:
 
-  deploy:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Get rep code
         uses: actions/checkout@v3
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~./npm
+          key: node-modules-${{ hashFiles("**/package-lock.json") }}
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Lint App
         run: npm run lint
+
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get rep code
+        uses: actions/checkout@v3
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~./npm
+          key: node-modules-${{ hashFiles("**/package-lock.json") }}
+      - name: Install dependencies
+        run: npm ci
       - name: Build App
         run: npm run build
+
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get rep code
+        uses: actions/checkout@v3
+      - name: Cache Dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~./npm
+          key: node-modules-${{ hashFiles("**/package-lock.json") }}
+      - name: Install dependencies
+        run: npm ci
       - name: Deploy
         run: echo "12345"

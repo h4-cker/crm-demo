@@ -26,23 +26,6 @@ jobs:
       - name: Lint App
         run: npm run lint
 
-  build:
-    needs: deployment
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get rep code
-        uses: actions/checkout@v3
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: 'npm'
-          cache-dependency-path: ./package-lock.json
-      - name: Install dependencies
-        run: npm ci
-      - name: Build App
-        run: npm run build
-
   deployment:
     needs: lint
     runs-on: ubuntu-latest
@@ -59,3 +42,25 @@ jobs:
         run: npm ci
       - name: Deploy
         run: echo "12345"
+
+  build:
+    needs: deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get rep code
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: ./package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Build App
+        run: npm run build
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: crm
+          path: build

@@ -20,6 +20,7 @@ jobs:
         with:
           path: ~./npm
           key: node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: node-modules-
       - name: Install dependencies
         run: npm ci
       - name: Lint App
@@ -36,6 +37,7 @@ jobs:
         with:
           path: ~./npm
           key: node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: node-modules-
       - name: Install dependencies
         run: npm ci
       - name: Build App
@@ -51,6 +53,7 @@ jobs:
         with:
           path: ~./npm
           key: node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: node-modules-
       - name: Install dependencies
         run: npm ci
       - name: Deploy
